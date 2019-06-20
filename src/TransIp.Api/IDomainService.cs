@@ -1,13 +1,14 @@
 ﻿using System.Net;
 using TransIp.Api.Dto;
+using TransIp.Api.Dto.Domain;
 using TransIp.Api.Remote;
-using DnsEntry = TransIp.Api.Dto.DnsEntry;
-using Domain = TransIp.Api.Dto.Domain;
-using DomainAction = TransIp.Api.Dto.DomainAction;
-using DomainCheckResult = TransIp.Api.Dto.DomainCheckResult;
-using Nameserver = TransIp.Api.Dto.Nameserver;
-using Tld = TransIp.Api.Dto.Tld;
-using WhoisContact = TransIp.Api.Dto.WhoisContact;
+using DnsEntry = TransIp.Api.Dto.Domain.DnsEntry;
+using Domain = TransIp.Api.Dto.Domain.Domain;
+using DomainAction = TransIp.Api.Dto.Domain.DomainAction;
+using DomainCheckResult = TransIp.Api.Dto.Domain.DomainCheckResult;
+using Nameserver = TransIp.Api.Dto.Domain.Nameserver;
+using Tld = TransIp.Api.Dto.Domain.Tld;
+using WhoisContact = TransIp.Api.Dto.Domain.WhoisContact;
 
 namespace TransIp.Api
 {

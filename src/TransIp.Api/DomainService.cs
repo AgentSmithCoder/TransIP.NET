@@ -4,60 +4,22 @@ using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.Threading.Tasks;
 using TransIp.Api.Dto;
-using DnsEntry = TransIp.Api.Dto.DnsEntry;
-using Domain = TransIp.Api.Dto.Domain;
-using DomainAction = TransIp.Api.Dto.DomainAction;
-using DomainBranding = TransIp.Api.Dto.DomainBranding;
-using DomainCheckResult = TransIp.Api.Dto.DomainCheckResult;
-using Nameserver = TransIp.Api.Dto.Nameserver;
-using Tld = TransIp.Api.Dto.Tld;
-using WhoisContact = TransIp.Api.Dto.WhoisContact;
+using TransIp.Api.Dto.Domain;
+using DnsEntry = TransIp.Api.Dto.Domain.DnsEntry;
+using Domain = TransIp.Api.Dto.Domain.Domain;
+using DomainAction = TransIp.Api.Dto.Domain.DomainAction;
+using DomainCheckResult = TransIp.Api.Dto.Domain.DomainCheckResult;
+using Nameserver = TransIp.Api.Dto.Domain.Nameserver;
+using Tld = TransIp.Api.Dto.Domain.Tld;
+using WhoisContact = TransIp.Api.Dto.Domain.WhoisContact;
 
 namespace TransIp.Api
 {
-	/// <summary>
+    /// <summary>
 	/// The service for domain related tasks.
 	/// </summary>
 	public class DomainService : ClientBase<Remote.DomainServicePortTypeClient, Remote.DomainServicePortType>, IDomainService
 	{
-		/// <summary>
-		/// Static constructor.
-		/// </summary>
-		static DomainService()
-		{
-			Mapper.Initialize(cfg => {
-				cfg.CreateMap<DnsEntry, Remote.DnsEntry>();
-				cfg.CreateMap<Remote.DnsEntry, DnsEntry>();
-
-				cfg.CreateMap<Remote.Domain, Domain>()
-					.ForMember(x => x.IsLocked, opt => opt.ResolveUsing(x => x.isLockedSpecified ? x.isLocked : (bool?)null));
-				cfg.CreateMap<Domain, Remote.Domain>()
-					.ForMember(x => x.isLocked, opt => opt.ResolveUsing(x => x.IsLocked.GetValueOrDefault(false)))
-					.ForMember(x => x.isLockedSpecified, opt => opt.ResolveUsing(x => x.IsLocked.HasValue));
-
-				cfg.CreateMap<Remote.DomainAction, DomainAction>();
-				cfg.CreateMap<DomainAction, Remote.DomainAction>();
-
-				cfg.CreateMap<Remote.DomainBranding, DomainBranding>();
-				cfg.CreateMap<DomainBranding, Remote.DomainBranding>();
-
-				cfg.CreateMap<Remote.DomainCheckResult, DomainCheckResult>();
-
-				cfg.CreateMap<Remote.Nameserver, Nameserver>();
-				cfg.CreateMap<Nameserver, Remote.Nameserver>();
-
-				cfg.CreateMap<Remote.Tld, Tld>()
-					.ForMember(x => x.CapabilityList, opt => opt.MapFrom(x => x.capabilities))
-					.ForMember(x => x.Capabilities, opt => opt.Ignore());
-				cfg.CreateMap<Tld, Remote.Tld>()
-					.ForMember(x => x.capabilities, opt => opt.MapFrom(x => x.CapabilityList));
-
-				cfg.CreateMap<Remote.WhoisContact, WhoisContact>()
-					.ForMember(x => x.CompanyNumber, opt => opt.MapFrom(x => x.companyKvk));
-				cfg.CreateMap<WhoisContact, Remote.WhoisContact>()
-					.ForMember(x => x.companyKvk, opt => opt.MapFrom(x => x.CompanyNumber));
-			});
-		}
 
 		/// <summary>
 		/// Create a new client for communicating with the TransIP domain service.
@@ -65,7 +27,7 @@ namespace TransIp.Api
 		/// <param name="login">The login name from TransIP.</param>
 		/// <param name="mode">The mode.</param>
 		/// <param name="privateKey">The private key.</param>
-		public DomainService(string login, ClientMode mode, string privateKey)
+		public DomainService(string login, ClientMode mode, string privateKey) 
 			: base("DomainService", "https://api.transip.nl/soap/?service=DomainService", login, mode, privateKey)
 		{
 		}
